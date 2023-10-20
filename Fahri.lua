@@ -15,6 +15,18 @@ PremiumOnly = false
 })
 
 local T3 = Window:MakeTab({
+Name = "Upgrades",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T5 = Window:MakeTab({
+Name = "Wands",
+Icon = "rbxassetid://",
+PremiumOnly = false
+})
+
+local T4 = Window:MakeTab({
 Name = "Misc",
 Icon = "rbxassetid://",
 PremiumOnly = false
@@ -29,34 +41,6 @@ for _,v in pairs(workspace:GetDescendants()) do
     end
   end
 end
-
---[[
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["RebirthService"]["RE"]["Rebirth"]:FireServer()
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["BattleService"]["RE"]["Click"]:FireServer()
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["ToolService"]["RE"]["Activated"]:FireServer()
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["SpinService"]["RF"]["Spin"]:InvokeServer()
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["ToolService"]["RE"]["Activated"]:FireServer()
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["BattleService"]["RE"]["Click"]:FireServer()game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["SpinService"]["RF"]["Spin"]:InvokeServer()
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["RebirthService"]["RE"]["Rebirth"]:FireServer()
-local args = {
-    [1] = 2
-}
-
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["SessionService"]["RF"]["Redeem"]:InvokeServer(1)
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["RebirthService"]["RE"]["Rebirth"]:FireServer()
-local args = {
-    [1] = 1
-}
-
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["EventEggService"]["RE"]["Hatch"]:FireServer(1)
-local args = {
-    [1] = "Rainbow",
-    [2] = 1
-}
-
-game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["EggService"]["RE"]["Purchase"]:FireServer(,1)
-
-]]
 
 T1:AddToggle({
    Name = "Auto Click",
@@ -151,7 +135,44 @@ T2:AddToggle({
   end    
 })
 
-T3:AddButton({
+T3:AddDropdown({
+  Name = "Select Upgrades",
+  Default = "Wins",
+  Options = {"Wins","Power","Luck","Walkspeed"},
+  Callback = function(Value)
+     _G._Upgrade = Value
+  end    
+})
+
+T3:AddToggle({
+   Name = "Upgrade",
+   Default = false,
+   Callback = function(Value)
+     _G._upg = Value
+      while wait() do
+        if _G._upg == false then break end
+        game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["PlayerUpgradeService"]["RE"]["Upgrade"]:FireServer(_G._Upgrade)         
+      end
+  end    
+})
+
+T5:AddDropdown({
+  Name = "Select Wands",
+  Default = "1",
+  Options = {"1","2","3","4","5","6","7","8","9","10","11","12"},
+  Callback = function(Value)
+     _G._Wands = Value
+  end    
+})
+
+T5:AddButton({
+  Name = "Equip Wands",
+  Callback = function()
+      game:GetService("ReplicatedStorage")["Packages"]["_Index"]:FindFirstChild("sleitnick_knit@1.4.7")["knit"]["Services"]["ToolService"]["RE"]["Equip"]:FireServer(tonumber(_G._Wands))          
+  end    
+})
+
+T4:AddButton({
   Name = "Remove Button Duration",
   Callback = function()
       NoClickDuration()
